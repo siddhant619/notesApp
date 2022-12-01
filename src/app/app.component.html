@@ -1,36 +1,4 @@
 <app-header></app-header>
-<div class="container border border-red p-10">
-  <form class="flex flex-wrap items-center -mx-3 mb-6">
-    <div class="w-full md:w-1/2 px-3">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-last-name"
-      >
-        Title
-      </label>
-      <input
-        class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="grid-last-name"
-        type="text"
-        placeholder="Search by title..."
-      />
-    </div>
-    <div class="w-full md:w-1/2 px-3">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-last-name"
-      >
-        Tags
-      </label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Tags...'"
-        [settings]="dropdownSettings"
-        [data]="dropdownList"
-        [(ngModel)]="selectedItems"
-        (onSelect)="onItemSelect($event)"
-        (onSelectAll)="onSelectAll($event)"
-      >
-      </ng-multiselect-dropdown>
-    </div>
-  </form>
+<div class="container border border-red-500 p-10">
+  <router-outlet></router-outlet>
 </div>
