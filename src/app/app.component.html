@@ -1,4 +1,24 @@
 <app-header></app-header>
-<div class="container border border-red-500 p-10">
+<!-- <div class="container border border-red-500 p-10">
+  <div class="w-full md:w-1/2 px-3">
+    <form>
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        for="grid-last-name"
+      >
+        Tags
+      </label>
+      <ng-multiselect-dropdown
+        [placeholder]="'Tags...'"
+        [settings]="dropdownSettings"
+        [data]="dropdownList"
+        [(ngModel)]="selectedItems"
+        (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+      >
+      </ng-multiselect-dropdown>
+    </form>
+  </div> -->
+<div class="container p-10">
   <router-outlet></router-outlet>
 </div>

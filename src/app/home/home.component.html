@@ -1,22 +1,23 @@
-<form class="flex flex-wrap items-center -mx-3 mb-6">
-  <div class="w-full md:w-1/2 px-3">
+<div class="flex justify-center gap-4 items-center">
+  <div class="w-full md:w-1/2">
     <label
       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-      for="grid-last-name"
+      for="search-title"
     >
       Title
     </label>
     <input
-      class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-      id="grid-last-name"
+      class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-400 rounded py-2-5 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      id="search-title"
       type="text"
       placeholder="Search by title..."
+      (input)="onTitleChange($event)"
     />
   </div>
-  <div class="w-full md:w-1/2 px-3">
+  <div class="w-full md:w-1/2">
     <label
       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-      for="grid-last-name"
+      for="search-tags"
     >
       Tags
     </label>
@@ -26,8 +27,42 @@
       [data]="dropdownList"
       [(ngModel)]="selectedItems"
       (onSelect)="onItemSelect($event)"
+      (onDeSelect)="onDeSelect($event)"
       (onSelectAll)="onSelectAll($event)"
     >
     </ng-multiselect-dropdown>
   </div>
-</form>
+</div>
+<div class="grid grid-cols-4 gap-4 mt-10">
+  <div
+    class="flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-300 hover:shadow-lg hover:cursor-pointer"
+    *ngFor="let note of notes"
+  >
+    <div class="w-100">
+      <div class="flex justify-between items-center">
+        <p class="font-semibold text-xl mb-2">{{ note.title }}</p>
+        <fa-icon *ngIf="note.isPinned" [icon]="faThumbTack"></fa-icon>
+      </div>
+      <p>
+        {{
+          note.content.length > 70
+            ? (note.content | slice: 0:70) + "..."
+            : note.content
+        }}
+      </p>
+    </div>
+    <div class="flex flex-col justify-end">
+      <div class="tags-container flex flex-wrap gap-2 mb-2 mt-3">
+        <div
+          *ngFor="let tag of note.tags"
+          class="px-2 py-1 rounded-full bg-gray-200 text-gray-700"
+        >
+          {{ tag.text }}
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm">
+        Last modified: {{ note.last_modified | date: "mediumDate" }}
+      </p>
+    </div>
+  </div>
+</div>

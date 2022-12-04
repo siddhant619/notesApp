@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Note } from '../shared/note.model';
+import { NotesService } from '../shared/notes.service';
+import { Tag } from '../shared/tag.model';
+import { TagService } from '../shared/tag.service';
+import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -6,44 +11,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
-
-  title = 'notesApp';
-  dropdownList:any = [];
-  selectedItems:any  = [];
+  faThumbTack=faThumbTack
+  notes: Note[]=[];
+  dropdownList:Tag[] = [];
+  selectedItems:Tag[]  = [];
   dropdownSettings = {};
+  constructor(private tagSvc: TagService, private notesSvc: NotesService) { }
   ngOnInit() {
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' },
-      { item_id: 6, item_text: 'New york' },
-      { item_id: 7, item_text: 'California' },
-      { item_id: 8, item_text: 'Hyderabad' },
-      { item_id: 9, item_text: 'Orissa' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
+    this.notes= this.notesSvc.getNotes()
+    //console.log(this.notes);
+    
+    this.dropdownList = this.tagSvc.getTags()
+    this.selectedItems = this.tagSvc.getSelectedTags()
+      
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'id',
+      textField: 'text',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 5,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      maxHeight:130
     };
   }
   onItemSelect(item: any) {
     console.log(item);
+
+  }
+  onDeSelect(item: any){
+    console.log(item)
   }
   onSelectAll(items: any) {
     console.log(items);
+  }
+  onTitleChange(e:Event){
+    console.log(e);
+    
   }
 
 }

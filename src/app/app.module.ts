@@ -10,7 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { NewNoteComponent } from './notes/new-note/new-note.component';
 import { NoteDetailComponent } from './notes/note-detail/note-detail.component';
 import { NoteEditComponent } from './notes/note-edit/note-edit.component';
+import { TagService } from './shared/tag.service';
 import { TagsComponent } from './tags/tags.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -25,9 +27,10 @@ import { TagsComponent } from './tags/tags.component';
   imports: [
     BrowserModule,FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
-  providers: [],
+  providers: [TagService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
