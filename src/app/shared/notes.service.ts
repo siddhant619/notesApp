@@ -17,9 +17,9 @@ export class NotesService {
     new Tag(6,'Database'),], true),
     new Note(1,'Database systems', 'some new content afweffef ome new content afweffe ','purple', new Date("2022-09-23"),
     [new Tag(1,'HTML'), new Tag(2,'CSS'),], true),
-    new Note(1,'f', '','purple', new Date("2022-09-23"),[], false),
-    new Note(1,'f', '','purple', new Date("2022-09-23"),[], true),
-    new Note(1,'Database systems', 'some new content afweffef ome new content afweffe ','purple', new Date("2022-09-23"),
+    new Note(1,'f', '','orange', new Date("2022-09-23"),[], false),
+    new Note(1,'f', '','green', new Date("2022-09-23"),[], true),
+    new Note(1,'Database systems', 'some new content afweffef ome new content afweffe ','orange', new Date("2022-09-23"),
     [new Tag(1,'HTML'), new Tag(2,'CSS'),], true),
 
 

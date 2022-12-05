@@ -8,6 +8,10 @@ module.exports = {
       },
       colors: {
         primary: "black",
+        noteBlue: "blue-100",
+        noteGreen: "green-500",
+        notePurple: "purple-100",
+        noteOrange: "orange-100",
       },
     },
   },

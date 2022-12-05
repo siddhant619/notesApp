@@ -35,13 +35,16 @@
 </div>
 <div class="grid grid-cols-4 gap-4 mt-10">
   <div
-    class="flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-300 hover:shadow-lg hover:cursor-pointer"
+    class="bg-noteGreen flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-300 hover:shadow-lg hover:cursor-pointer"
     *ngFor="let note of notes"
   >
     <div class="w-100">
       <div class="flex justify-between items-center">
         <p class="font-semibold text-xl mb-2">{{ note.title }}</p>
-        <fa-icon *ngIf="note.isPinned" [icon]="faThumbTack"></fa-icon>
+        <fa-icon
+          [ngClass]="{ 'text-gray-300': !note.isPinned }"
+          [icon]="faThumbTack"
+        ></fa-icon>
       </div>
       <p>
         {{
