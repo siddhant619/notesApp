@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AppRoutingModule } from './app-routing.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,6 +14,8 @@ import { NoteEditComponent } from './notes/note-edit/note-edit.component';
 import { TagService } from './shared/tag.service';
 import { TagsComponent } from './tags/tags.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { ClickedOutsideDirective } from './directives/clicked-outside.directive';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NewNoteComponent,
     NoteDetailComponent,
     NoteEditComponent,
-    TagsComponent
+    TagsComponent,
+    DropdownComponent,
+    ClickedOutsideDirective
   ],
   imports: [
     BrowserModule,FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgSelectModule
   ],
   providers: [TagService],
   bootstrap: [AppComponent]

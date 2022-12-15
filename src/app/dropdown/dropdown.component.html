@@ -1,0 +1,37 @@
+<div
+  class="flex flex-col relative"
+  appClickedOutside
+  (onClickOutside)="onOutsideClick()"
+>
+  <div
+    class="w-100 py-2 px-3 flex justify-between items-center bg-gray-100 border border-gray-400 rounded hover:cursor-pointer"
+    (click)="onDropdownClicked()"
+    #dropdownInput
+  >
+    <div (click)="ontagclicked()" class="text-gray-400">Select tags</div>
+    <fa-icon
+      *ngIf="!isDropdownOpen"
+      class="text-gray-600"
+      [icon]="faArrowDown"
+    ></fa-icon>
+    <fa-icon
+      *ngIf="isDropdownOpen"
+      class="text-gray-600"
+      [icon]="faArrowUp"
+    ></fa-icon>
+  </div>
+  <div
+    class="overflow-y-scroll absolute top-12 left-0 right-0 z-10 bg-white h-40 border border-gray-400 rounded hover:cursor-pointer"
+    [ngStyle]="{ visibility: isDropdownOpen ? 'visible' : 'hidden' }"
+    #menu
+  >
+    <input
+      class="appearance-none block w-full bg-gray-100 text-gray-700 border-b border-gray-400 py-2-5 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      type="text"
+      placeholder="search"
+    />
+    <div *ngFor="let option of options" class="px-3">
+      <p>{{ option.text }}</p>
+    </div>
+  </div>
+</div>

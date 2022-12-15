@@ -13,7 +13,7 @@ import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
 export class HomeComponent implements OnInit {
   faThumbTack=faThumbTack
   notes: Note[]=[];
-  dropdownList:Tag[] = [];
+  tagOptions:Tag[] = [];
   selectedItems:Tag[]  = [];
   dropdownSettings = {};
   constructor(private tagSvc: TagService, private notesSvc: NotesService) { }
@@ -21,9 +21,9 @@ export class HomeComponent implements OnInit {
     this.notes= this.notesSvc.getNotes()
     //console.log(this.notes);
     
-    this.dropdownList = this.tagSvc.getTags()
+    this.tagOptions = this.tagSvc.getTags()
     this.selectedItems = this.tagSvc.getSelectedTags()
-      
+      console.log(this.selectedItems)
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',

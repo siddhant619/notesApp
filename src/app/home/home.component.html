@@ -1,4 +1,4 @@
-<div class="flex justify-center gap-4 items-center">
+<div class="flex justify-center gap-4 items-start">
   <div class="w-full md:w-1/2">
     <label
       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -21,7 +21,7 @@
     >
       Tags
     </label>
-    <ng-multiselect-dropdown
+    <!-- <ng-multiselect-dropdown
       [placeholder]="'Tags...'"
       [settings]="dropdownSettings"
       [data]="dropdownList"
@@ -30,12 +30,30 @@
       (onDeSelect)="onDeSelect($event)"
       (onSelectAll)="onSelectAll($event)"
     >
-    </ng-multiselect-dropdown>
+    </ng-multiselect-dropdown> -->
+    <!-- <app-dropdown></app-dropdown> -->
+    <ng-select
+      name="search-tags"
+      [(ngModel)]="selectedItems"
+      [multiple]="true"
+      [searchable]="true"
+      placeholder="Search with tags.."
+    >
+      <ng-option *ngFor="let tag of tagOptions" [value]="tag.id">{{
+        tag.text
+      }}</ng-option>
+    </ng-select>
   </div>
 </div>
 <div class="grid grid-cols-4 gap-4 mt-10">
   <div
-    class="bg-noteGreen flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-300 hover:shadow-lg hover:cursor-pointer"
+    [ngClass]="{
+      'bg-blue-100': note.color === 'blue',
+      'bg-green-100': note.color === 'green',
+      'bg-purple-100': note.color === 'purple',
+      'bg-red-100': note.color === 'red'
+    }"
+    class="flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-100 hover:shadow-lg hover:cursor-pointer"
     *ngFor="let note of notes"
   >
     <div class="w-100">
@@ -58,7 +76,7 @@
       <div class="tags-container flex flex-wrap gap-2 mb-2 mt-3">
         <div
           *ngFor="let tag of note.tags"
-          class="px-2 py-1 rounded-full bg-gray-200 text-gray-700"
+          class="px-2 py-1 rounded-full bg-gray-200/75 text-gray-700"
         >
           {{ tag.text }}
         </div>

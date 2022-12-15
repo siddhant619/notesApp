@@ -14,6 +14,6 @@ export class TagService{
         return this.tags 
     }
     getSelectedTags(){
-        return [this.tags[0],this.tags[2],this.tags[3],this.tags[5], ]
+        return [ ]
     }
 }
