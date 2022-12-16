@@ -36,6 +36,9 @@ export class NotesService {
       return -1;
     })
     return this.notes
+  }
 
+  createNote(title: string, content: string, tags: Tag[]){
+    
   }
 }

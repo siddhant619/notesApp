@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+//import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AppRoutingModule } from './app-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -31,10 +32,10 @@ import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
   ],
   imports: [
     BrowserModule,FormsModule,
-    NgMultiSelectDropDownModule.forRoot(),
     AppRoutingModule,
     FontAwesomeModule,
-    NgSelectModule
+    NgSelectModule,
+    ColorPickerModule
   ],
   providers: [TagService],
   bootstrap: [AppComponent]
