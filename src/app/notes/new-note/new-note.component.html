@@ -74,7 +74,8 @@
         Background color
       </label>
       <input
-        class="hover:cursor-pointer rounded"
+        [ngModel]="noteColor"
+        class="hover:cursor-pointer rounded border border-black"
         name="new-note-color"
         [(colorPicker)]="noteColor"
         [style.background]="noteColor"

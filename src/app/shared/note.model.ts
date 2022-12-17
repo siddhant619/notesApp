@@ -1,9 +1,9 @@
 import { Tag } from "./tag.model";
 
 export class Note{
-    
+    public id?:string
     constructor(
-        public id: number,
+        
         public title:string,
         public content: string,
         public color: string, 

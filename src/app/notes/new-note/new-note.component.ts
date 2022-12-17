@@ -10,7 +10,7 @@ import { TagService } from 'src/app/shared/tag.service';
   styleUrls: ['./new-note.component.css']
 })
 export class NewNoteComponent implements OnInit {
-  noteColor: string="blue"
+  noteColor: string="white"
   tagOptions:Tag[] = [];
   selectedItems:Tag[]  = [];
 
@@ -27,8 +27,8 @@ export class NewNoteComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-    console.log('selected: ',this.selectedItems)
-
+    this.notesSvc.createNote(f.value["new-note-title"],f.value["new-note-content"], f.value["new-note-color"],
+    f.value["new-note-tags"] )
     console.log(f);
   }
 }

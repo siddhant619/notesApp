@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ColorPickerModule } from 'ngx-color-picker';
+import {HttpClientModule} from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -35,7 +36,8 @@ import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
     AppRoutingModule,
     FontAwesomeModule,
     NgSelectModule,
-    ColorPickerModule
+    ColorPickerModule,
+    HttpClientModule
   ],
   providers: [TagService],
   bootstrap: [AppComponent]

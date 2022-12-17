@@ -11,7 +11,6 @@
       id="search-title"
       type="text"
       placeholder="Search by title..."
-      (input)="onTitleChange($event)"
     />
   </div>
   <div class="w-full md:w-1/2">
@@ -47,24 +46,23 @@
 </div>
 <div class="grid grid-cols-4 gap-4 mt-10">
   <div
-    [ngClass]="{
-      'bg-blue-100': note.color === 'blue',
-      'bg-green-100': note.color === 'green',
-      'bg-purple-100': note.color === 'purple',
-      'bg-red-100': note.color === 'red'
-    }"
     class="flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-100 hover:shadow-lg hover:cursor-pointer"
     *ngFor="let note of notes"
+    [ngStyle]="{ 'background-color': note.color }"
   >
     <div class="w-100">
       <div class="flex justify-between items-center">
-        <p class="font-semibold text-xl mb-2">{{ note.title }}</p>
+        <p class="break-all font-semibold text-xl mb-2">{{ note.title }}</p>
         <fa-icon
-          [ngClass]="{ 'text-gray-300': !note.isPinned }"
+          [ngClass]="{
+            'text-gray-300': !note.isPinned,
+            'text-black': note.isPinned
+          }"
           [icon]="faThumbTack"
+          (click)="togglePinnedStatus(note)"
         ></fa-icon>
       </div>
-      <p>
+      <p class="break-words">
         {{
           note.content.length > 70
             ? (note.content | slice: 0:70) + "..."

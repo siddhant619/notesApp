@@ -16,4 +16,9 @@ export class TagService{
     getSelectedTags(){
         return [ ]
     }
+    getTag(id: number): Tag|undefined{
+        return this.tags.find(tag=>{
+            return tag.id===id
+        })
+    }
 }
