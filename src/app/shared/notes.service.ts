@@ -47,6 +47,7 @@ export class NotesService {
       )
   } */
   getNotes():Promise<any> { //return a promise
+    console.log('fetching notes from db')
     return new Promise((resolve, reject)=>{
     
         this.dataSvc.fetchNotes()
@@ -57,7 +58,6 @@ export class NotesService {
                       if(!noteA.isPinned) return 1;
                       return -1;
                     })
-                    //console.log('fetched notes(in notes svc)!:', this.notes)
                     resolve(this.notes)
                   },
             error: error=>{
@@ -72,7 +72,20 @@ export class NotesService {
     
     
   }
-  
+  async getNote(id: string):Promise<any>{
+    if(this.notes.length===0) //need to fetch notes(when notes detail page is refreshed)
+    {
+      await this.getNotes();
+    }
+    let note:any;
+    for(let currNote of this.notes){
+      if(currNote.id===id) note=currNote
+    }
+    return note
+    /* return new Promise((resolve,reject)=>{
+      resolve(note)
+    }) */
+  }
   createNote(title: string, content: string, color:string, tagIds: number[]){
     const tags:Tag[]=[];
     tagIds.map(tagId=>{

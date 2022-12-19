@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   async fetchNotes(){
        this.notes= await this.notesSvc.getNotes();
-       console.log('Got notes in home: ', this.notes)
   }
   togglePinnedStatus(e:Event, note:Note){
     e.stopPropagation()
@@ -58,7 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     .subscribe(
       {
         next: (responseData)=>{
-          console.log('Changed pinned status, now fetching again')
           this.fetchNotes()
           
         },
@@ -67,9 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       }
     )
-    //this.fetchNotes()
-    //this.notes[0].title='xyz'
-    //console.log(this.notes)
+    
   }
   onNoteClicked(id: string|undefined) {
     if(id)
