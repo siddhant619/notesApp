@@ -49,18 +49,23 @@
     class="flex flex-col justify-between p-4 border border-gray-500 rounded ease-in duration-100 hover:shadow-lg hover:cursor-pointer"
     *ngFor="let note of notes"
     [ngStyle]="{ 'background-color': note.color }"
+    (click)="onNoteClicked(note.id)"
   >
     <div class="w-100">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-start">
         <p class="break-all font-semibold text-xl mb-2">{{ note.title }}</p>
-        <fa-icon
-          [ngClass]="{
-            'text-gray-300': !note.isPinned,
-            'text-black': note.isPinned
-          }"
-          [icon]="faThumbTack"
-          (click)="togglePinnedStatus(note)"
-        ></fa-icon>
+        <div
+          class="rounded-full py-1 px-2 ease-in duration-100 hover:bg-gray-500/25"
+        >
+          <fa-icon
+            [ngClass]="{
+              'text-gray-300': !note.isPinned,
+              'text-black': note.isPinned
+            }"
+            [icon]="faThumbTack"
+            (click)="togglePinnedStatus($event, note)"
+          ></fa-icon>
+        </div>
       </div>
       <p class="break-words">
         {{
@@ -74,7 +79,7 @@
       <div class="tags-container flex flex-wrap gap-2 mb-2 mt-3">
         <div
           *ngFor="let tag of note.tags"
-          class="px-2 py-1 rounded-full bg-gray-200/75 text-gray-700"
+          class="px-2 py-1 rounded-full bg-gray-200/70 text-gray-700"
         >
           {{ tag.text }}
         </div>

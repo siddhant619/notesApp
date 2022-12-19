@@ -34,12 +34,7 @@ export class NotesService {
   ] */
   notes:Note[]=[]
   constructor(private tagSvc: TagService, private dataSvc: DataStorageService) { }
-  getNotes():Observable<Note[]>{
-    /* this.notes.sort((noteA,noteB)=>{
-      if(!noteA.isPinned) return 1;
-      return -1;
-    })
-    return this.notes */
+  /* getNotes():Observable<Note[]>{
     return this.dataSvc.fetchNotes()
       .pipe( map((data)=>{
         let noteArr:Note[]=[];
@@ -49,11 +44,35 @@ export class NotesService {
         }
         return noteArr
         })
-      ) 
+      )
+  } */
+  getNotes():Promise<any> { //return a promise
+    return new Promise((resolve, reject)=>{
+    
+        this.dataSvc.fetchNotes()
+          .subscribe({
+            next: (responseData:Note[])=>{
+                    this.notes=responseData
+                    this.notes.sort((noteA,noteB)=>{
+                      if(!noteA.isPinned) return 1;
+                      return -1;
+                    })
+                    //console.log('fetched notes(in notes svc)!:', this.notes)
+                    resolve(this.notes)
+                  },
+            error: error=>{
+                    console.log('Could not fetch notes: ', error)
+                    reject(error)
+                    //return this.notes
+                  }  
+            }
+          )
+      
+    })
     
     
   }
-
+  
   createNote(title: string, content: string, color:string, tagIds: number[]){
     const tags:Tag[]=[];
     tagIds.map(tagId=>{
@@ -63,7 +82,7 @@ export class NotesService {
       }
     })
     const newNote= new Note(title,content,color,new Date(), tags,false );
-    this.notes.push(newNote)
+    //this.notes.push(newNote)
     this.dataSvc.storeNote(newNote);
   }
   togglePinnedStatus(noteId: string|undefined, pinnedStatus: boolean){

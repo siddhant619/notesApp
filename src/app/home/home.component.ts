@@ -5,6 +5,7 @@ import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
 import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -39,37 +40,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   tagOptions:Tag[] = [];
   selectedItems:Tag[]  = [];
   dropdownSettings = {};
-  constructor(private tagSvc: TagService, private notesSvc: NotesService) { }
+  constructor(private tagSvc: TagService, private notesSvc: NotesService,
+    private router: Router) { }
   ngOnInit() {
     this.fetchNotes()  
     this.tagOptions = this.tagSvc.getTags()
     this.selectedItems = this.tagSvc.getSelectedTags()
-      console.log(this.selectedItems)
     
   }
-  fetchNotes(){
-    this.notesSubscription= this.notesSvc.getNotes().subscribe({
-      next: (responseData:Note[])=>{
-              this.notes=responseData
-              this.notes.sort((noteA,noteB)=>{
-                if(!noteA.isPinned) return 1;
-                return -1;
-              })
-              //this.notes[0].title='abc'
-              this.notes.map(note=>{
-                console.log(note.title, note.isPinned)
-              })
-              //return this.notes
-            },
-      error: error=>{
-              console.log('Could not fetch notes: ', error)
-              //return this.notes
-            }  
-      }
-    )    
+  async fetchNotes(){
+       this.notes= await this.notesSvc.getNotes();
+       console.log('Got notes in home: ', this.notes)
   }
-  togglePinnedStatus(note:Note){
-
+  togglePinnedStatus(e:Event, note:Note){
+    e.stopPropagation()
     this.notesSvc.togglePinnedStatus(note.id, !note.isPinned)
     .subscribe(
       {
@@ -87,7 +71,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     //this.notes[0].title='xyz'
     //console.log(this.notes)
   }
-
+  onNoteClicked(id: string|undefined) {
+    if(id)
+      this.router.navigate(['/notes',id])
+  }
   ngOnDestroy(): void {
     this.notesSubscription?.unsubscribe()
   }
