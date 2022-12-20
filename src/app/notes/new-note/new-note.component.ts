@@ -12,7 +12,7 @@ import { TagService } from 'src/app/shared/tag.service';
 export class NewNoteComponent implements OnInit {
   noteColor: string="white"
   tagOptions:Tag[] = [];
-  selectedItems:Tag[]  = [];
+  selectedItems:Number[]  = [];
 
     cars = [
         { id: 1, name: 'Volvo' },

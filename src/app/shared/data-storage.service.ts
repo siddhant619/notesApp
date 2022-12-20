@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Note } from './note.model';
+import { Tag } from './tag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,13 @@ export class DataStorageService {
         "isPinned": newPinnedStatus
       }    
     )
+  }
+
+  updateNote(id:string, title: string, content: string, color: string, last_modified: Date, tags: Tag[]){
+    return this.http.patch(this.FIREBASE_URL+ "/"+id+  ".json",
+    {
+      title,content,color,last_modified,tags
+    })
+
   }
 }

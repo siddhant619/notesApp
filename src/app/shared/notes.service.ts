@@ -87,7 +87,7 @@ export class NotesService {
     }) */
   }
   createNote(title: string, content: string, color:string, tagIds: number[]){
-    const tags:Tag[]=[];
+    let tags:Tag[]=[];
     tagIds.map(tagId=>{
       const tag=this.tagSvc.getTag(tagId) 
       if(tag){
@@ -101,4 +101,16 @@ export class NotesService {
   togglePinnedStatus(noteId: string|undefined, pinnedStatus: boolean){
     return this.dataSvc.toggleNotePinnedStatus(noteId, pinnedStatus)
   }
+
+  updateNote(id:any, title: string, content: string, color: string, date: Date, tagIds: number[]){
+    let tags:Tag[]=[];
+    tagIds.map(tagId=>{
+      const tag=this.tagSvc.getTag(tagId) 
+      if(tag){
+        tags.push(tag)
+      }
+    })
+    return this.dataSvc.updateNote(id, title,content,color,date,tags)
+  }
+
 }

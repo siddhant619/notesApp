@@ -1,1 +1,97 @@
-<p>note-edit works!</p>
+<p class="text-3xl">Edit Note</p>
+<div class="mt-5">
+  <form class="flex flex-col" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="flex justify-center items-center">
+      <div class="w-full md:w-1/2 px-3">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="edit-note-title"
+        >
+          Title
+        </label>
+        <input
+          class="appearance-none block w-full text-gray-900 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          id="edit-note-title"
+          type="text"
+          placeholder="Enter title..."
+          name="edit-note-title"
+          [ngModel]="currentNote.title"
+        />
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="edit-note-tags"
+        >
+          Tags
+        </label>
+        <!-- <ng-multiselect-dropdown
+          [placeholder]="'Tags...'"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          [(ngModel)]="selectedItems"
+          (onSelect)="onItemSelect($event)"
+          (onDeSelect)="onDeSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown> -->
+        <!-- <app-dropdown ngModel name="new-note-tags" [options]="dropdownOptions">
+        </app-dropdown> -->
+
+        <ng-select
+          name="edit-note-tags"
+          [(ngModel)]="selectedItems"
+          [multiple]="true"
+          [searchable]="true"
+          placeholder="Tags"
+          class="customselect"
+        >
+          <ng-option *ngFor="let tag of tagOptions" [value]="tag.id">{{
+            tag.text
+          }}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+    <div class="mt-3 w-full px-3">
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        for="edit-note-content"
+      >
+        Body
+      </label>
+      <textarea
+        name="edit-note-content"
+        [ngModel]="currentNote.content"
+        class="h-40 appearance-none block w-full text-gray-700 border border-gray-400 rounded py-2-5 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      >
+      </textarea>
+    </div>
+    <div class="mt-3 w-full px-3">
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        for="edit-note-color"
+      >
+        Background color
+      </label>
+      <input
+        [ngModel]="currentNote.color"
+        class="hover:cursor-pointer rounded border border-black"
+        name="edit-note-color"
+        [(colorPicker)]="currentNote.color"
+        [style.background]="currentNote.color"
+      />
+    </div>
+    <div class="mt-3 flex items-center justify-center gap-4">
+      <button
+        class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+      >
+        Save
+      </button>
+      <button
+        class="border border-primary ease-in px-2 py-1 rounded duration-100 hover:bg-primary hover:text-white"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
