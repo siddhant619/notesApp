@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Note } from 'src/app/shared/note.model';
 import { NotesService } from 'src/app/shared/notes.service';
 
@@ -11,7 +11,7 @@ import { NotesService } from 'src/app/shared/notes.service';
 export class NoteDetailComponent implements OnInit {
   id: string=''
   currentNote: Note={id:'', title:'', content:'', isPinned:false, tags:[], color:'',last_modified:new Date}
-  constructor(private route: ActivatedRoute, private notesSvc: NotesService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private notesSvc: NotesService) { }
 
   ngOnInit(): void {
     this.route.params
@@ -21,5 +21,13 @@ export class NoteDetailComponent implements OnInit {
         //console.log(this.currentNote)
       })
   }
+  onDelete(){
+    this.notesSvc.deleteNote(this.currentNote.id)
+     .subscribe(responseData=>{
 
+      console.log('deleted note')
+      this.router.navigate(["/"])
+     })
+
+  }
 }

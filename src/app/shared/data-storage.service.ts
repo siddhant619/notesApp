@@ -49,4 +49,7 @@ export class DataStorageService {
     })
 
   }
+  deleteNote(id: string){
+    return this.http.delete(this.FIREBASE_URL+"/"+id+".json")
+  }
 }

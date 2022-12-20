@@ -113,4 +113,8 @@ export class NotesService {
     return this.dataSvc.updateNote(id, title,content,color,date,tags)
   }
 
+  deleteNote(id: any){
+    return this.dataSvc.deleteNote(id)
+  }
+
 }
