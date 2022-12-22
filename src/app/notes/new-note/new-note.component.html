@@ -45,6 +45,7 @@
           [searchable]="true"
           placeholder="Tags"
           class="customselect"
+          [addTag]="true"
         >
           <ng-option *ngFor="let tag of tagOptions" [value]="tag.id">{{
             tag.text

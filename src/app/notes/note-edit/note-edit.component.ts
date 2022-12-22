@@ -19,7 +19,7 @@ export class NoteEditComponent implements OnInit {
   constructor( private route: ActivatedRoute, private notesSvc: NotesService, private tagSvc: TagService) { }
 
   ngOnInit(): void {
-    this.tagOptions = this.tagSvc.getTags()
+    this.getTags();
     this.route.params
       .subscribe(async (params)=>{
         this.id= params['id'] 
@@ -31,8 +31,34 @@ export class NoteEditComponent implements OnInit {
         this.selectedItems=tmp;
       })
   }
+  async getTags(){
+    this.tagOptions = await this.tagSvc.getTags()
+  }
+  isTagsEqual(newTags: number[]):boolean{
+    const tagIds=this.currentNote.tags.map(tag=>{
+      return tag.id
+    })
+    if(newTags.length===tagIds.length){
+      for(let element of newTags){
+        if(!tagIds.includes(element))
+          return false
+      }
+      return true;
+    }
+    else
+      return false;
+    
+    
+  }
   onSubmit(f: NgForm){
-    console.log('edit form', new Date());
+    if(this.currentNote.content===f.value["edit-note-content"]&& 
+    this.currentNote.color===f.value["edit-note-color"]&&
+    this.currentNote.title===f.value["edit-note-title"]&&
+    this.isTagsEqual(f.value["edit-note-tags"])
+    ) 
+      {
+        return;
+      }
     this.notesSvc.updateNote(this.currentNote.id, f.value["edit-note-title"], 
     f.value["edit-note-content"],f.value["edit-note-color"],new Date(), f.value["edit-note-tags"], )
     .subscribe(responseData=>{

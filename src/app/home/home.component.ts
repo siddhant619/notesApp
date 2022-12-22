@@ -42,10 +42,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   dropdownSettings = {};
   constructor(private tagSvc: TagService, private notesSvc: NotesService,
     private router: Router) { }
-  ngOnInit() {
+  async ngOnInit() {
     this.fetchNotes()  
-    this.tagOptions = this.tagSvc.getTags()
-    this.selectedItems = this.tagSvc.getSelectedTags()
+    this.tagOptions = await this.tagSvc.getTags()
     
   }
   async fetchNotes(){

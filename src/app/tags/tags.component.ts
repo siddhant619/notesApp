@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Tag } from '../shared/tag.model';
+import { TagService } from '../shared/tag.service';
 
 @Component({
   selector: 'app-tags',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tags.component.css']
 })
 export class TagsComponent implements OnInit {
+  tags: Tag[]=[];
+  constructor(private tagSvc: TagService) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.tags=await this.tagSvc.getTags()
+    
   }
+  
+
 
 }

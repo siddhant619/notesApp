@@ -14,19 +14,13 @@ export class NewNoteComponent implements OnInit {
   tagOptions:Tag[] = [];
   selectedItems:Number[]  = [];
 
-    cars = [
-        { id: 1, name: 'Volvo' },
-        { id: 2, name: 'Saab' },
-        { id: 3, name: 'Opel' },
-        { id: 4, name: 'Audi' },
-    ];
   constructor(private tagSvc: TagService, private notesSvc: NotesService) { }
-  ngOnInit() {
-    this.tagOptions = this.tagSvc.getTags()
+  async ngOnInit() {
+    this.tagOptions=await this.tagSvc.getTags()
     
   }
-
   onSubmit(f: NgForm){
+
     this.notesSvc.createNote(f.value["new-note-title"],f.value["new-note-content"], f.value["new-note-color"],
     f.value["new-note-tags"] )
     console.log(f);

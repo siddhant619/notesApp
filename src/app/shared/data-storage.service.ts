@@ -9,6 +9,7 @@ import { Tag } from './tag.model';
 })
 export class DataStorageService {
   FIREBASE_URL: string= "https://notes-app-angular-75a00-default-rtdb.firebaseio.com/notes"
+  FIREBASE_URL_TAGS: string= "https://notes-app-angular-75a00-default-rtdb.firebaseio.com/tags"
   constructor(private http:HttpClient) { }
   /* fetchNotes(){
     return this.http.get<{[id: string]: Note}>(this.FIREBASE_URL+ ".json",)
@@ -52,4 +53,19 @@ export class DataStorageService {
   deleteNote(id: string){
     return this.http.delete(this.FIREBASE_URL+"/"+id+".json")
   }
+  fetchTags(){
+    return this.http.get(this.FIREBASE_URL_TAGS+".json" )
+    .pipe(map((data:any)=>{
+      let tagArr:Tag[]=[];
+      for(let key in data){
+        tagArr.push(data[key])
+      }
+      return tagArr
+      }))
+  }
+  createTag(id: number,text: string){
+    return this.http.post(this.FIREBASE_URL_TAGS+".json", {id,text} )
+           
+  }
+  
 }
