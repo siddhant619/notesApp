@@ -58,14 +58,22 @@ export class DataStorageService {
     .pipe(map((data:any)=>{
       let tagArr:Tag[]=[];
       for(let key in data){
-        tagArr.push(data[key])
+        tagArr.push({...data[key], id:key  })
       }
       return tagArr
       }))
   }
-  createTag(id: number,text: string){
-    return this.http.post(this.FIREBASE_URL_TAGS+".json", {id,text} )
+  createTag(text: string){
+    return this.http.post(this.FIREBASE_URL_TAGS+".json", {text} )
            
+  }
+  updateTag(id:string, text: string){
+    console.log('updatetag', id, text)
+    return this.http.patch(this.FIREBASE_URL_TAGS+ "/"+id+  ".json",
+    {
+      text
+    })
+    //'https://notes-app-angular-75a00-default-rtdb.firebaseio.com/tags/-NJtMWlv2PyscG4wm8OT'
   }
   
 }

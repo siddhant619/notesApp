@@ -73,7 +73,7 @@ export class NotesService {
     
   }
   async getNote(id: string):Promise<any>{
-    if(this.notes.length===0) //need to fetch notes(when notes detail page is refreshed)
+    if(this.notes.length===0) //need to fetch notes(when notes detail/edit page is refreshed)
     {
       await this.getNotes();
     }
@@ -86,7 +86,7 @@ export class NotesService {
       resolve(note)
     }) */
   }
-  createNote(title: string, content: string, color:string, tagIds: number[]){
+  createNote(title: string, content: string, color:string, tagIds: string[]){
     let tags:Tag[]=[];
     tagIds.map(tagId=>{
       const tag=this.tagSvc.getTag(tagId) 
@@ -102,7 +102,7 @@ export class NotesService {
     return this.dataSvc.toggleNotePinnedStatus(noteId, pinnedStatus)
   }
 
-  updateNote(id:any, title: string, content: string, color: string, date: Date, tagIds: number[]){
+  updateNote(id:any, title: string, content: string, color: string, date: Date, tagIds: string[]){
     let tags:Tag[]=[];
     tagIds.map(tagId=>{
       const tag=this.tagSvc.getTag(tagId) 

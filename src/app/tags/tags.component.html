@@ -1,1 +1,24 @@
 <p class="text-3xl">Tags</p>
+<div class="mt-3">
+  <div *ngFor="let tag of tags; let i = index" class="flex items-center my-2">
+    <input
+      class="appearance-none block w-1/3 focus:shadow-inner text-gray-900 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      type="text"
+      placeholder="Enter tag lable"
+      [(ngModel)]="tag.text"
+    />
+    <div
+      class="text-gray-800 ml-2 mr-1 px-1 rounded-sm bg-gray-300 hover:cursor-pointer"
+    >
+      <fa-icon (click)="onSaveTag(i)" [icon]="faFloppyDisk"></fa-icon>
+    </div>
+    <div
+      class="text-gray-800 mr-1 px-1 rounded-sm bg-gray-300 hover:cursor-pointer"
+    >
+      <fa-icon [icon]="faTrash"></fa-icon>
+    </div>
+  </div>
+  <span class="text-gray-800 hover:cursor-pointer">
+    <fa-icon (click)="onAddTagInput()" [icon]="faPlusCircle"></fa-icon>
+  </span>
+</div>

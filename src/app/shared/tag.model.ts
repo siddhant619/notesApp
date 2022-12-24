@@ -1,6 +1,6 @@
 export class Tag{
     
-    constructor(public id: number,public text: string){
+    constructor(public id: string,public text: string){
 
     }
 

@@ -14,7 +14,7 @@ import { TagService } from 'src/app/shared/tag.service';
 export class NoteEditComponent implements OnInit {
   id: string=''
   tagOptions:Tag[] = [];
-  selectedItems:Number[] = [];
+  selectedItems:string[] = [];
   currentNote: Note={id:'', title:'', content:'', isPinned:false, tags:[], color:'',last_modified:new Date}
   constructor( private route: ActivatedRoute, private notesSvc: NotesService, private tagSvc: TagService) { }
 
@@ -24,7 +24,7 @@ export class NoteEditComponent implements OnInit {
       .subscribe(async (params)=>{
         this.id= params['id'] 
         this.currentNote= await this.notesSvc.getNote(this.id)
-        let tmp:Number[]=[];
+        let tmp:string[]=[];
         this.currentNote.tags.map(tag=>{
           tmp.push(tag.id)
         })
@@ -34,7 +34,7 @@ export class NoteEditComponent implements OnInit {
   async getTags(){
     this.tagOptions = await this.tagSvc.getTags()
   }
-  isTagsEqual(newTags: number[]):boolean{
+  isTagsEqual(newTags: string[]):boolean{
     const tagIds=this.currentNote.tags.map(tag=>{
       return tag.id
     })

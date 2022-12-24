@@ -7,13 +7,6 @@ import { Tag } from "./tag.model";
   })
 export class TagService{
     private tags: Tag[]=[
-        new Tag(1,'HTML'),
-        new Tag(2,'CSS'),
-        new Tag(3,'Javascirpt'),
-        new Tag(4,'C++'),
-        new Tag(5,'Algorithms'),
-        new Tag(6,'Database'),
-        
     ]
     constructor( private dataSvc: DataStorageService) { }
 
@@ -38,25 +31,19 @@ export class TagService{
     getSelectedTags(){
         return [ ]
     }
-    getTag(id: number): Tag|undefined{
+    getTag(id: string): Tag|undefined{
         return this.tags.find(tag=>{
             return tag.id===id
         })
     }
     createTag(label: string){ //return promise
-        let maxId=0
-        if(this.tags)
-        {
-            this.tags.map(tag=>{
-                maxId=Math.max(tag.id, maxId)
-            })
-        }
         return new Promise((resolve, reject)=>{
-            this.dataSvc.createTag(maxId+1, label)
+            this.dataSvc.createTag(label)
             .subscribe({
                 next: async (response)=>{
+                    console.log('created new tag', response)
                     await this.getTags()
-                    resolve(maxId+1)
+                    resolve(response)
                 },
                 error: error=>{
                     console.log('could not create tag.')
@@ -66,4 +53,21 @@ export class TagService{
         })
         
     }
+    updateTag(id:string, label: string){
+        return new Promise((resolve, reject)=>{
+            this.dataSvc.updateTag(id, label)
+            .subscribe({
+                next: async (response)=>{
+                    console.log('Updated tag', response)
+                    await this.getTags()
+                    resolve(id)
+                },
+                error: error=>{
+                    console.log('could not update tag.')
+                    reject(error)
+                }
+            })
+        })
+    }
+    
 }
