@@ -3,7 +3,7 @@ import { Note } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
-import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
+import { faThumbTack,faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   faThumbTack=faThumbTack
+  faNoteSticky=faNoteSticky
   notes: Note[]=[];
   /* notes: Note[]=[
     new Note( 'HTML notes', 'some note content afweffef est note content1 afweffeest note content1 afweffeest note content1 afweffe', '#66ccff' , new Date("2021-01-16"),
