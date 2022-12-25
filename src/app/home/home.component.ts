@@ -44,21 +44,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private tagSvc: TagService, private notesSvc: NotesService,
     private router: Router) { }
   async ngOnInit() {
-    this.fetchNotes()  
+    //this.fetchNotes()  
     this.tagOptions = await this.tagSvc.getTags()
+    this.notes= await this.notesSvc.getNotes();
+    console.log('Tags: ',this.tagOptions)
+    console.log('Notes: ',this.notes)
     
   }
-  async fetchNotes(){
+  /* async fetchNotes(){
        this.notes= await this.notesSvc.getNotes();
-  }
+       console.log(this.notes)
+  } */
   togglePinnedStatus(e:Event, note:Note){
     e.stopPropagation()
     this.notesSvc.togglePinnedStatus(note.id, !note.isPinned)
     .subscribe(
       {
-        next: (responseData)=>{
-          this.fetchNotes()
-          
+        next: async (responseData)=>{
+          //this.fetchNotes()
+          this.notes= await this.notesSvc.getNotes();
         },
         error: error=>{
           console.log('could not updated pinned status')
