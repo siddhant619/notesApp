@@ -101,4 +101,14 @@ export class NotesService {
     return this.dataSvc.deleteNote(id)
   }
 
+  updateNotesTag(id: string){
+    this.notes.map(note=>{
+      note.tags=note.tags.filter(tag=>{
+          if(tag.id===id) return false;
+          return true;
+      })
+  })
+  console.log('after removing tag', this.notes);
+  }
+
 }

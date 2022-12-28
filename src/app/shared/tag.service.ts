@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DataStorageService } from "./data-storage.service";
+import { Note } from "./note.model";
+import { NotesService } from "./notes.service";
 import { Tag } from "./tag.model";
 
 @Injectable({
@@ -10,7 +12,7 @@ export class TagService{
     ]
     constructor( private dataSvc: DataStorageService) { }
 
-    getTags(): Promise<any>{
+    async getTags(): Promise<any>{
         //console.log('fetching tags from db')
         return new Promise((resolve, reject)=>{
             this.dataSvc.fetchTags()
@@ -68,6 +70,16 @@ export class TagService{
                 }
             })
         })
+    }
+    deleteTag(id: string){        
+
+        return new Promise((resolve, reject)=>{
+            setTimeout(()=>{
+                //reject('Could not delete tag');
+                resolve(1)
+            },2000)
+        })
+        
     }
     
 }

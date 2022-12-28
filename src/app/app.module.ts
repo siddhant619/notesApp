@@ -37,7 +37,8 @@ import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
     FontAwesomeModule,
     NgSelectModule,
     ColorPickerModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [TagService],
   bootstrap: [AppComponent]

@@ -54,6 +54,9 @@ export class DataStorageService {
     })
 
   }
+  updateNoteTags(id: string, tags:string[]){
+    
+  }
   deleteNote(id: string){
     return this.http.delete(this.FIREBASE_URL+"/"+id+".json")
   }

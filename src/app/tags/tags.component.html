@@ -1,4 +1,9 @@
-<p class="text-3xl">Tags</p>
+<div class="flex items-center gap-2">
+  <p class="text-3xl">Tags</p>
+  <div *ngIf="showSpinner" class="w-6 h-6">
+    <img src="assets/loader.png" class="text-sm animate-spin" />
+  </div>
+</div>
 <div class="mt-3">
   <div *ngFor="let tag of tags; let i = index" class="flex items-center my-2">
     <input
@@ -6,6 +11,7 @@
       type="text"
       placeholder="Enter tag lable"
       [(ngModel)]="tag.text"
+      disabled
     />
     <div
       class="text-gray-800 ml-2 mr-1 px-1 rounded-sm bg-gray-300 hover:cursor-pointer"
@@ -15,7 +21,7 @@
     <div
       class="text-gray-800 mr-1 px-1 rounded-sm bg-gray-300 hover:cursor-pointer"
     >
-      <fa-icon [icon]="faTrash"></fa-icon>
+      <fa-icon (click)="onDeleteTag(i)" [icon]="faTrash"></fa-icon>
     </div>
   </div>
   <span class="text-gray-800 hover:cursor-pointer">
