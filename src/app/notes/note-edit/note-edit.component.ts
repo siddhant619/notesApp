@@ -15,6 +15,7 @@ export class NoteEditComponent implements OnInit {
   id: string=''
   tagOptions:Tag[] = [];
   selectedItems:string[] = [];
+  initialColor:string=''
   currentNote: Note={id:'', title:'', content:'', isPinned:false, tags:[], color:'',last_modified:new Date}
   constructor( private route: ActivatedRoute, private notesSvc: NotesService, private tagSvc: TagService) { }
 
@@ -29,6 +30,7 @@ export class NoteEditComponent implements OnInit {
           tmp.push(tag.id)
         })
         this.selectedItems=tmp;
+        this.initialColor=this.currentNote.color
       })
   }
   async getTags(){
@@ -51,9 +53,10 @@ export class NoteEditComponent implements OnInit {
     
   }
   onSubmit(f: NgForm){
-    if(this.currentNote.content===f.value["edit-note-content"]&& 
-    this.currentNote.color===f.value["edit-note-color"]&&
+    console.log(f)
+    if(this.currentNote.content===f.value["edit-note-content"]&&
     this.currentNote.title===f.value["edit-note-title"]&&
+    this.currentNote.color===this.initialColor&&
     this.isTagsEqual(f.value["edit-note-tags"])
     ) 
       {
@@ -62,7 +65,7 @@ export class NoteEditComponent implements OnInit {
     this.notesSvc.updateNote(this.currentNote.id, f.value["edit-note-title"], 
     f.value["edit-note-content"],f.value["edit-note-color"],new Date(), f.value["edit-note-tags"], )
     .subscribe(responseData=>{
-      console.log('updated data')
+      //console.log('updated data')
     })
   }
 

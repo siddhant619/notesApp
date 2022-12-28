@@ -33,27 +33,28 @@ export class NotesService {
 
   ] */
   notes:Note[]=[]
+  tags:Tag[]=[]
   constructor(private tagSvc: TagService, private dataSvc: DataStorageService) { }
-  /* getNotes():Observable<Note[]>{
-    return this.dataSvc.fetchNotes()
-      .pipe( map((data)=>{
-        let noteArr:Note[]=[];
-        //console.log('a pipe map ran')
-        for(let key in data){
-          noteArr.push({...data[key], id:key  })
-        }
-        return noteArr
-        })
-      )
-  } */
-  getNotes():Promise<any> { //return a promise
-    console.log('fetching notes from db')
+  
+  async getNotes():Promise<any> { //return a promise
+    //console.log('fetching notes from db')
+    this.tags = await this.tagSvc.getTags()
     return new Promise((resolve, reject)=>{
     
         this.dataSvc.fetchNotes()
           .subscribe({
-            next: (responseData:Note[])=>{
-                    this.notes=responseData
+            next: (responseData)=>{
+                    this.notes=[]
+                    for(let data of responseData){
+                      let tagIds=data.tags
+                      data.tags=[]
+                      if(tagIds){
+                        for(let tagId of tagIds){
+                          data.tags.push(this.tagSvc.getTag(tagId))
+                        }
+                      }
+                      this.notes.push(data);
+                    }
                     this.notes.sort((noteA,noteB)=>{
                       if(!noteA.isPinned) return 1;
                       return -1;
@@ -82,35 +83,18 @@ export class NotesService {
       if(currNote.id===id) note=currNote
     }
     return note
-    /* return new Promise((resolve,reject)=>{
-      resolve(note)
-    }) */
+    
   }
   createNote(title: string, content: string, color:string, tagIds: string[]){
-    let tags:Tag[]=[];
-    tagIds.map(tagId=>{
-      const tag=this.tagSvc.getTag(tagId) 
-      if(tag){
-        tags.push(tag)
-      }
-    })
-    const newNote= new Note(title,content,color,new Date(), tags,false );
-    //this.notes.push(newNote)
-    this.dataSvc.storeNote(newNote);
+    this.dataSvc.storeNote(title, content, color,tagIds, new Date(), false)
   }
   togglePinnedStatus(noteId: string|undefined, pinnedStatus: boolean){
     return this.dataSvc.toggleNotePinnedStatus(noteId, pinnedStatus)
   }
 
   updateNote(id:any, title: string, content: string, color: string, date: Date, tagIds: string[]){
-    let tags:Tag[]=[];
-    tagIds.map(tagId=>{
-      const tag=this.tagSvc.getTag(tagId) 
-      if(tag){
-        tags.push(tag)
-      }
-    })
-    return this.dataSvc.updateNote(id, title,content,color,date,tags)
+    
+    return this.dataSvc.updateNote(id, title,content,color,date,tagIds)
   }
 
   deleteNote(id: any){

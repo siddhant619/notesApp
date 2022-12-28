@@ -15,9 +15,9 @@ export class DataStorageService {
     return this.http.get<{[id: string]: Note}>(this.FIREBASE_URL+ ".json",)
   } */
   fetchNotes(){
-    return this.http.get<{[id: string]: Note}>(this.FIREBASE_URL+ ".json",)
+    return this.http.get<{[id: string]: any}>(this.FIREBASE_URL+ ".json",)
         .pipe( map((data)=>{
-          let noteArr:Note[]=[];
+          let noteArr=[];
           //console.log('a pipe map ran')
           for(let key in data){
             noteArr.push({...data[key], id:key  })
@@ -28,10 +28,14 @@ export class DataStorageService {
         
   }
 
-  storeNote(note: Note){
+  storeNote(title: string, content: string, color:string, tags: string[], last_modified: Date, isPinned:boolean ){
     this.http.post(this.FIREBASE_URL+ ".json",
-      note).subscribe(responseData=>{
-        console.log('note pushed: ', responseData)
+        {
+          title,content, color,tags, last_modified, isPinned 
+        }
+      )
+      .subscribe(responseData=>{
+        console.log('New note created: ', responseData)
       })
   }
 
@@ -43,7 +47,7 @@ export class DataStorageService {
     )
   }
 
-  updateNote(id:string, title: string, content: string, color: string, last_modified: Date, tags: Tag[]){
+  updateNote(id:string, title: string, content: string, color: string, last_modified: Date, tags: string[]){
     return this.http.patch(this.FIREBASE_URL+ "/"+id+  ".json",
     {
       title,content,color,last_modified,tags
