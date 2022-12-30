@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, tap } from 'rxjs';
 import { Note } from './note.model';
 import { Tag } from './tag.model';
 
@@ -29,14 +29,12 @@ export class DataStorageService {
   }
 
   storeNote(title: string, content: string, color:string, tags: string[], last_modified: Date, isPinned:boolean ){
-    this.http.post(this.FIREBASE_URL+ ".json",
+    return this.http.post(this.FIREBASE_URL+ ".json",
         {
           title,content, color,tags, last_modified, isPinned 
         }
       )
-      .subscribe(responseData=>{
-        console.log('New note created: ', responseData)
-      })
+      
   }
 
   toggleNotePinnedStatus(noteId:string|undefined, newPinnedStatus: boolean){
@@ -54,8 +52,29 @@ export class DataStorageService {
     })
 
   }
-  updateNoteTags(id: string, tags:string[]){
-    
+  updateNoteTags(notes:{id: string|undefined, tags: string[]}[] ){
+    let success = 0;                   // <-- trivial counters
+    let errors = 0;
+
+    const reqs = notes.map(note =>  // <-- replate `this.urls` with your object array
+      this.http.patch(this.FIREBASE_URL+ "/"+note.id+  ".json",
+          {
+            tags: note.tags
+          }
+        ).
+          pipe(         // <-- replace `url` with your own PUT request
+            tap(_ => success++),           // <-- count successful responses here
+            catchError(err => {        
+              errors++;                    // <-- count errors here
+              return of(err);              // <-- remember to return an observable from `catchError`
+            })
+          )
+        );
+        forkJoin(reqs).subscribe({
+          next: ()=>{},
+          error: err=> console.log(err),
+          complete: ()=> console.log(`Success: ${success}\nErrors: ${errors}`)
+        })
   }
   deleteNote(id: string){
     return this.http.delete(this.FIREBASE_URL+"/"+id+".json")
@@ -75,12 +94,15 @@ export class DataStorageService {
            
   }
   updateTag(id:string, text: string){
-    console.log('updatetag', id, text)
     return this.http.patch(this.FIREBASE_URL_TAGS+ "/"+id+  ".json",
     {
       text
     })
     //'https://notes-app-angular-75a00-default-rtdb.firebaseio.com/tags/-NJtMWlv2PyscG4wm8OT'
+  }
+
+  deleteTag(id: string){
+    return this.http.delete(this.FIREBASE_URL_TAGS+ "/"+id+  ".json")
   }
   
 }

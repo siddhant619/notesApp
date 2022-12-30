@@ -65,7 +65,7 @@ export class TagService{
                     resolve(id)
                 },
                 error: error=>{
-                    console.log('could not update tag.')
+                    console.log('could not update tag.', error)
                     reject(error)
                 }
             })
@@ -74,10 +74,17 @@ export class TagService{
     deleteTag(id: string){        
 
         return new Promise((resolve, reject)=>{
-            setTimeout(()=>{
-                //reject('Could not delete tag');
-                resolve(1)
-            },2000)
+            this.dataSvc.deleteTag(id)
+            .subscribe({
+                next: (response)=>{
+                    resolve(id);
+                },
+                error: error=>{
+                    console.log('could not delete tag.', error)
+                    reject(error)
+                }
+
+            })
         })
         
     }

@@ -86,7 +86,9 @@ export class NotesService {
     
   }
   createNote(title: string, content: string, color:string, tagIds: string[]){
-    this.dataSvc.storeNote(title, content, color,tagIds, new Date(), false)
+    return this.dataSvc.storeNote(title, content, color,tagIds, new Date(), false)
+    
+
   }
   togglePinnedStatus(noteId: string|undefined, pinnedStatus: boolean){
     return this.dataSvc.toggleNotePinnedStatus(noteId, pinnedStatus)
@@ -102,13 +104,27 @@ export class NotesService {
   }
 
   updateNotesTag(id: string){
+    let tmp: {id:string|undefined, tags: string[]}[] =[] //store all notes(with 
+    // id and new tags object) that have the deleted tag.
+    console.log(this.notes)
     this.notes.map(note=>{
+      let modifiedNote:{id: string|undefined, tags:string[]}={id: note.id, tags:[]}
+      let isModified=0;
       note.tags=note.tags.filter(tag=>{
-          if(tag.id===id) return false;
+          if(tag.id===id) {
+            isModified=1;
+            return false;
+          }
           return true;
       })
-  })
-  console.log('after removing tag', this.notes);
+      if(isModified){
+        modifiedNote.tags=note.tags.map(tag=>{
+          return tag.id
+        })
+        tmp.push(modifiedNote)
+      }
+    })
+    this.dataSvc.updateNoteTags(tmp)      
   }
 
 }

@@ -11,6 +11,7 @@ import { TagService } from 'src/app/shared/tag.service';
 })
 export class NewNoteComponent implements OnInit {
   noteColor: string="white"
+  showSpinner:boolean=false
   tagOptions:Tag[] = [];
   selectedItems:Number[]  = [];
 
@@ -20,9 +21,13 @@ export class NewNoteComponent implements OnInit {
     
   }
   onSubmit(f: NgForm){
-
+    this.showSpinner=true;
     this.notesSvc.createNote(f.value["new-note-title"],f.value["new-note-content"], f.value["new-note-color"],
     f.value["new-note-tags"] )
-    console.log(f);
+    .subscribe(responseData=>{
+      
+      console.log('New note created: ', responseData)
+      this.showSpinner=false;
+    })
   }
 }

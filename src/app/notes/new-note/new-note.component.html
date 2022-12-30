@@ -84,6 +84,8 @@
     <div class="mt-3 flex items-center justify-center gap-4">
       <button
         class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+        [disabled]="showSpinner"
+        [ngClass]="{ 'bg-gray-600': showSpinner }"
       >
         Create
       </button>
@@ -94,6 +96,12 @@
       >
         Cancel
       </button>
+      <div
+        [ngStyle]="{ visibility: showSpinner ? 'visible' : 'hidden' }"
+        class="w-6 h-6"
+      >
+        <img src="assets/loader.png" class="text-sm text-white animate-spin" />
+      </div>
     </div>
   </form>
 </div>

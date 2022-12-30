@@ -19,6 +19,7 @@ export class TagsComponent implements OnInit {
 
   async ngOnInit() {
     this.tags=await this.tagSvc.getTags()
+    this.notesSvc.getNotes()
   }
   
   onAddTagInput(){
