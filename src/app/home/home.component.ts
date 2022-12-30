@@ -3,7 +3,7 @@ import { Note } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
-import { faThumbTack,faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { faThumbTack,faNoteSticky,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,10 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   faThumbTack=faThumbTack
   faNoteSticky=faNoteSticky
+  faMagnifyingGlass=faMagnifyingGlass
+  title: string=''
   notes: Note[]=[];
+  matchingNotes: Note[]=[];
   /* notes: Note[]=[
     new Note( 'HTML notes', 'some note content afweffef est note content1 afweffeest note content1 afweffeest note content1 afweffe', '#66ccff' , new Date("2021-01-16"),
     [new Tag(2,'CSS'),
@@ -39,14 +42,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   ] */
   notesSubscription?: Subscription
   tagOptions:Tag[] = [];
-  selectedItems:Tag[]  = [];
+  selectedItems:string[]  = [];
   dropdownSettings = {};
   constructor(private tagSvc: TagService, private notesSvc: NotesService,
     private router: Router) { }
   async ngOnInit() {
     this.tagOptions = await this.tagSvc.getTags()
     this.notes= await this.notesSvc.getNotes();
-
+    this.matchingNotes=this.notes
     
   }
   
@@ -57,6 +60,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       {
         next: async (responseData)=>{
           this.notes= await this.notesSvc.getNotes();
+          this.matchingNotes=this.notes
+          this.searchNotes()
         },
         error: error=>{
           console.log('could not updated pinned status')
@@ -69,6 +74,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(id)
       this.router.navigate(['/notes',id])
   }
+  searchNotes(){
+    this.matchingNotes=this.notes.filter(note=>{
+      if(note.title.toLowerCase().includes(this.title.toLowerCase())){
+        let tagIds= note.tags.map(tag=>tag.id)
+        for(let selectedIds of this.selectedItems){
+          if(!tagIds.includes(selectedIds))
+            return false;
+        }
+        return true;
+      }
+      return false;
+    })
+  }
+
+  onTagsChange(e:Event){
+    //console.log(e);
+    this.searchNotes()
+  }
+  onTitleChange(e: Event){
+    this.searchNotes()
+  }
+  
   ngOnDestroy(): void {
     this.notesSubscription?.unsubscribe()
   }
