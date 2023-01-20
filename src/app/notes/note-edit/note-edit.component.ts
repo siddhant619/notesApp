@@ -53,7 +53,6 @@ export class NoteEditComponent implements OnInit {
     
   }
   onSubmit(f: NgForm){
-    console.log(f)
     if(this.currentNote.content===f.value["edit-note-content"]&&
     this.currentNote.title===f.value["edit-note-title"]&&
     this.currentNote.color===this.initialColor&&

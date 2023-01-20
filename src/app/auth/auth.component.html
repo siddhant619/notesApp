@@ -1,0 +1,64 @@
+<div class="flex items-center w-1/2">
+  <form class="flex flex-col gap-4" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="w-full">
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        for="auth-email"
+      >
+        Email
+      </label>
+      <input
+        class="appearance-none block w-full text-gray-900 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="auth-email"
+        type="text"
+        placeholder="Email"
+        ngModel
+        name="email"
+        required
+        email
+      />
+    </div>
+    <div class="w-full">
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        for="auth-password"
+      >
+        Password
+      </label>
+      <input
+        class="appearance-none block w-full text-gray-900 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="auth-password"
+        type="password"
+        placeholder="Password"
+        ngModel
+        name="password"
+        required
+        minlength="6"
+      />
+    </div>
+    <div class="flex gap-3">
+      <button
+        class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+        [ngClass]="{ 'bg-gray-500': !f.valid }"
+        [disabled]="!f.valid"
+      >
+        {{ isLoginMode ? "Login" : "Sign Up" }}
+      </button>
+      <button
+        class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+        (click)="onSwitchMode()"
+        type="button"
+      >
+        Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
+      </button>
+    </div>
+    <!-- <div class="text-red-500" *ngIf="error">
+      {{ error }}
+    </div> -->
+    <app-alert
+      message="{{ error }}"
+      *ngIf="error"
+      (close)="onModalClose()"
+    ></app-alert>
+  </form>
+</div>
