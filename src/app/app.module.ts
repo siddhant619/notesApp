@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ColorPickerModule } from 'ngx-color-picker';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +18,10 @@ import { TagsComponent } from './tags/tags.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ClickedOutsideDirective } from './directives/clicked-outside.directive';
+import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptorService } from './shared/auth-interceptor.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
     NoteEditComponent,
     TagsComponent,
     DropdownComponent,
-    ClickedOutsideDirective
+    ClickedOutsideDirective,
+    AuthComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,FormsModule,
@@ -40,7 +46,14 @@ import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
     HttpClientModule,
     
   ],
-  providers: [TagService],
+  providers: [TagService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  },
+  AuthGuard
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

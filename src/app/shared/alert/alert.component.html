@@ -1,0 +1,15 @@
+<div
+  class="fixed flex items-center justify-center top-0 left-0 w-screen h-screen backdrop-blur-sm bg-black/30 z-50"
+>
+  <div class="z-100 bg-white border rounded-lg p-3">
+    <p>{{ message }}</p>
+    <div class="text-right mt-1">
+      <button
+        (click)="onClose()"
+        class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

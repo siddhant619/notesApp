@@ -10,7 +10,9 @@ import { Tag } from "./tag.model";
 export class TagService{
     private tags: Tag[]=[
     ]
-    constructor( private dataSvc: DataStorageService) { }
+    constructor( private dataSvc: DataStorageService) { 
+      
+     }
 
     async getTags(): Promise<any>{
         //console.log('fetching tags from db')

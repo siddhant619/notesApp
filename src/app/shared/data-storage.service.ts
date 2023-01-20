@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, tap } from 'rxjs';
 import { Note } from './note.model';
 import { Tag } from './tag.model';
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,21 @@ export class DataStorageService {
   /* fetchNotes(){
     return this.http.get<{[id: string]: Note}>(this.FIREBASE_URL+ ".json",)
   } */
+  getToken(){
+    const str=localStorage.getItem('userData')
+    if(typeof(str)==='string'){
+      let userData= JSON.parse(str)
+      return userData._token;
+
+    }
+    return null;
+  }
   fetchNotes(){
-    return this.http.get<{[id: string]: any}>(this.FIREBASE_URL+ ".json",)
+    return this.http.get<{[id: string]: any}>(this.FIREBASE_URL+ ".json",
+    {
+      headers:{ 'Anonymous': 'xyz' }
+    }
+    )
         .pipe( map((data)=>{
           let noteArr=[];
           //console.log('a pipe map ran')
@@ -94,10 +108,14 @@ export class DataStorageService {
            
   }
   updateTag(id:string, text: string){
+    const token=this.getToken()
     return this.http.patch(this.FIREBASE_URL_TAGS+ "/"+id+  ".json",
     {
       text
-    })
+    },
+    /* {
+      params: new HttpParams().set('auth', token)
+    } */)
     //'https://notes-app-angular-75a00-default-rtdb.firebaseio.com/tags/-NJtMWlv2PyscG4wm8OT'
   }
 

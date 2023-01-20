@@ -4,16 +4,31 @@
   <div class="text-4xl hover:cursor-pointer" routerLink="/">NotesApp</div>
   <div class="flex items-center justify-center gap-4">
     <button
+      *ngIf="isAuthenticated"
       class="bg-white border border-white text-black px-3 py-1 rounded ease-in duration-100 hover:bg-gray-200"
       routerLink="notes/new"
     >
       New Note
     </button>
     <button
+      *ngIf="isAuthenticated"
       class="border border-white ease-in px-3 py-1 rounded duration-100 hover:bg-white hover:text-black"
       routerLink="tags"
     >
       Tags
+    </button>
+    <button class="ml-3" *ngIf="isAuthenticated" (click)="onLogout()">
+      <fa-icon
+        class="text-gray-500 hover:text-white text-2xl"
+        [icon]="faRightFromBracket"
+      ></fa-icon>
+    </button>
+    <button
+      *ngIf="!isAuthenticated"
+      class="bg-white border border-white text-black px-3 py-1 rounded ease-in duration-100 hover:bg-gray-200"
+      routerLink="auth"
+    >
+      Authenticate
     </button>
   </div>
 </div>
