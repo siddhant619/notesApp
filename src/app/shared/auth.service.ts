@@ -115,7 +115,7 @@ export class AuthService {
         return throwError(()=>new Error(errorMessage))
       }),
       tap((res:AuthResponseData)=>{
-        console.log('in tap, ',res)
+        //console.log('in tap, ',res)
         this.handleAuth(res.email, res.localId, res.idToken, res.expiresIn)
       })
     )

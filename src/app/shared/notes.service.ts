@@ -37,7 +37,7 @@ export class NotesService {
   constructor(private tagSvc: TagService, private dataSvc: DataStorageService) { }
   
   async getNotes():Promise<any> { //return a promise
-    console.log('fetching notes from db')
+    //console.log('fetching notes from db')
     this.tags = await this.tagSvc.getTags()
     return new Promise((resolve, reject)=>{
     

@@ -62,7 +62,7 @@ export class TagService{
             this.dataSvc.updateTag(id, label)
             .subscribe({
                 next: async (response)=>{
-                    console.log('Updated tag', response)
+                    //console.log('Updated tag', response)
                     await this.getTags()
                     resolve(id)
                 },
