@@ -10,6 +10,7 @@ import { TagService } from 'src/app/shared/tag.service';
   styleUrls: ['./new-note.component.css']
 })
 export class NewNoteComponent implements OnInit {
+  message: string=''
   noteColor: string="white"
   showSpinner:boolean=false
   tagOptions:Tag[] = [];
@@ -24,10 +25,15 @@ export class NewNoteComponent implements OnInit {
     this.showSpinner=true;
     this.notesSvc.createNote(f.value["new-note-title"],f.value["new-note-content"], f.value["new-note-color"],
     f.value["new-note-tags"] )
-    .subscribe(responseData=>{
-      
-      console.log('New note created: ', responseData)
-      this.showSpinner=false;
+    .subscribe({
+      next: (responseData)=>{
+        this.message="Note created!";
+        this.showSpinner=false;
+      },
+      error: (error) =>{
+        this.message= "Could not create note: "+error.statusText;
+        this.showSpinner=false;
+      }
     })
   }
 }

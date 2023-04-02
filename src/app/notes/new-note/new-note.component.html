@@ -81,26 +81,28 @@
         [style.background]="noteColor"
       />
     </div>
-    <div class="mt-3 flex items-center justify-center gap-4">
-      <button
-        class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
-        [disabled]="showSpinner"
-        [ngClass]="{ 'bg-gray-600': showSpinner }"
-      >
-        Create
-      </button>
-      <button
-        type="button"
-        class="border border-primary ease-in px-2 py-1 rounded duration-100 hover:bg-primary hover:text-white"
-        routerLink="/"
-      >
-        Cancel
-      </button>
-      <div
-        [ngStyle]="{ visibility: showSpinner ? 'visible' : 'hidden' }"
-        class="w-6 h-6"
-      >
-        <img src="assets/loader.png" class="text-sm text-white animate-spin" />
+    <div class="mt-3 flex flex-col gap-1">
+      <div class="flex items-center justify-center gap-4">
+        <button
+          class="bg-primary border border-white text-white px-3 py-1 rounded ease-in duration-100 hover:bg-gray-600"
+          [disabled]="showSpinner"
+          [ngClass]="{ 'bg-gray-600': showSpinner }"
+        >
+          Create
+        </button>
+        <button
+          type="button"
+          class="border border-primary ease-in px-2 py-1 rounded duration-100 hover:bg-primary hover:text-white"
+          routerLink="/"
+        >
+          Cancel
+        </button>
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <div *ngIf="showSpinner" class="w-6 h-6">
+          <img src="assets/loader.png" class="text-sm animate-spin" />
+        </div>
+        <p *ngIf="message.length > 0">{{ message }}</p>
       </div>
     </div>
   </form>

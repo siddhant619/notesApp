@@ -36,7 +36,14 @@
     </ng-select>
   </div>
 </div>
-<div *ngIf="notes.length === 0" class="w-100 py-36">
+<div *ngIf="isLoading" class="w-100 py-36">
+  <div class="flex flex-col items-center">
+    <div class="w-40 h-40">
+      <img src="assets/loader.png" class="text-sm animate-spin" />
+    </div>
+  </div>
+</div>
+<div *ngIf="notes.length === 0 && !isLoading" class="w-100 py-36">
   <div class="flex flex-col items-center">
     <fa-icon
       class="text-gray-300 text-8xl mb-3"
@@ -45,7 +52,10 @@
     <p class="text-2xl text-gray-600">Notes you add appear here</p>
   </div>
 </div>
-<div *ngIf="notes.length !== 0 && matchingNotes.length===0" class="w-100 py-36">
+<div
+  *ngIf="notes.length !== 0 && matchingNotes.length === 0"
+  class="w-100 py-36"
+>
   <div class="flex flex-col items-center">
     <fa-icon
       class="text-gray-300 text-8xl mb-3"
@@ -95,7 +105,7 @@
         </div>
       </div>
       <p class="text-gray-700 text-sm">
-        Edited: {{ note.last_modified | date : "MMM dd, YYYY (h:m aa) " }}
+        Edited: {{ note.last_modified | date : "MMM dd, YYYY (h:mm aa) " }}
       </p>
     </div>
   </div>
