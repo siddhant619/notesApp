@@ -16,6 +16,8 @@ export class NoteEditComponent implements OnInit {
   tagOptions:Tag[] = [];
   selectedItems:string[] = [];
   initialColor:string=''
+  message:string='Updated'
+  isLoading:boolean=false;
   currentNote: Note={id:'', title:'', content:'', isPinned:false, tags:[], color:'',last_modified:new Date}
   constructor( private route: ActivatedRoute, private notesSvc: NotesService, private tagSvc: TagService) { }
 
@@ -61,10 +63,20 @@ export class NoteEditComponent implements OnInit {
       {
         return;
       }
+    this.isLoading=true;
     this.notesSvc.updateNote(this.currentNote.id, f.value["edit-note-title"], 
     f.value["edit-note-content"],f.value["edit-note-color"],new Date(), f.value["edit-note-tags"], )
-    .subscribe(responseData=>{
-      //console.log('updated data')
+    .subscribe({
+      next: (responseData)=>{
+        console.log(responseData);
+        this.message="Note Updated!";
+        this.isLoading=false;
+      },
+      error: (error)=>{
+        console.log(error);
+        this.message=error.statusText;
+        this.isLoading=false;
+      }
     })
   }
 
