@@ -16,7 +16,7 @@ export class NoteEditComponent implements OnInit {
   tagOptions:Tag[] = [];
   selectedItems:string[] = [];
   initialColor:string=''
-  message:string='Updated'
+  message:string=''
   isLoading:boolean=false;
   currentNote: Note={id:'', title:'', content:'', isPinned:false, tags:[], color:'',last_modified:new Date}
   constructor( private route: ActivatedRoute, private notesSvc: NotesService, private tagSvc: TagService) { }
